@@ -235,6 +235,13 @@ a{text-decoration:none;color:inherit}
   background:var(--bg3);padding:6px 12px;border-radius:var(--radius-sm);
   border:1px solid var(--border);white-space:nowrap;font-family:var(--font-mono);
 }
+.topbar-ip{
+  font-size:0.78rem;font-family:var(--font-mono);
+  background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.25);
+  color:var(--accent2);padding:6px 12px;border-radius:var(--radius-sm);
+  white-space:nowrap;letter-spacing:0.02em;cursor:default;
+  display:none;
+}
 .topbar-btn{
   width:36px;height:36px;border-radius:var(--radius-sm);
   background:var(--bg3);border:1px solid var(--border);
@@ -449,6 +456,7 @@ a{text-decoration:none;color:inherit}
 .uc-stat span:last-child{color:var(--text);font-weight:600}
 .online-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--green);background:rgba(52,211,153,0.1);padding:2px 8px;border-radius:99px}
 .offline-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--text3);background:var(--bg3);padding:2px 8px;border-radius:99px}
+.ip-badge{font-family:var(--font-mono);font-size:0.78rem;background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:6px;color:var(--accent2);letter-spacing:0.02em}
 
 /* RESPONSIVE */
 @media(max-width:768px){
@@ -592,6 +600,7 @@ a{text-decoration:none;color:inherit}
       </button>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div class="topbar-clock" id="topbar-clock">--:--:-- --</div>
+      <div class="topbar-ip" id="topbar-ip" title="Your IP Address">⬤ —</div>
       <!-- THEME TOGGLE -->
       <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
         <div class="theme-toggle-knob">🌙</div>
@@ -771,8 +780,20 @@ function addActivity(text) {
   if (a.length > 20) a.pop();
   localStorage.setItem('nw_activity', JSON.stringify(a));
 }
-function fakeIP() {
-  return `192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`;
+async function fetchRealIP() {
+  try {
+    const res = await fetch('https://api.ipify.org?format=json');
+    const data = await res.json();
+    return data.ip || '—';
+  } catch {
+    try {
+      const res2 = await fetch('https://api64.ipify.org?format=json');
+      const data2 = await res2.json();
+      return data2.ip || '—';
+    } catch {
+      return '—';
+    }
+  }
 }
 
 // ============================================================
@@ -817,6 +838,25 @@ function showApp(session) {
   initBotGreeting();
   pollGlobalChat();
   showView('dashboard');
+  // Show IP in topbar — load from stored user first, then refresh
+  const ipEl = document.getElementById('topbar-ip');
+  ipEl.style.display = '';
+  const users = getUsers();
+  const u = users.find(x => x.displayName === session.displayName);
+  if (u && u.ip && u.ip !== '—') {
+    ipEl.textContent = '⬤ ' + u.ip;
+    ipEl.title = 'Your IP: ' + u.ip;
+  } else {
+    ipEl.textContent = '⬤ Fetching IP…';
+  }
+  fetchRealIP().then(ip => {
+    ipEl.textContent = '⬤ ' + ip;
+    ipEl.title = 'Your IP: ' + ip;
+    // Persist latest IP
+    const latestUsers = getUsers();
+    const lu = latestUsers.find(x => x.displayName === session.displayName);
+    if (lu) { lu.ip = ip; saveUsers(latestUsers); }
+  });
 }
 
 function switchTab(tab) {
@@ -888,7 +928,7 @@ function setLoginDisabled(disabled) {
 // ============================================================
 // REGISTER
 // ============================================================
-function doRegister() {
+async function doRegister() {
   const name = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const display = document.getElementById('reg-display').value.trim();
@@ -897,10 +937,11 @@ function doRegister() {
   const users = getUsers();
   if (users.find(u => u.email === email)) return showError('reg-error', 'Email already registered.');
   if (users.find(u => u.displayName === display)) return showError('reg-error', 'Display name already taken.');
+  const ip = await fetchRealIP();
   const user = {
     name, email, displayName: display,
     password: PASS,
-    ip: fakeIP(),
+    ip,
     createdAt: Date.now(),
     lastSeen: Date.now(),
     online: false
@@ -915,7 +956,7 @@ function doRegister() {
 // ============================================================
 // LOGIN
 // ============================================================
-function doLogin() {
+async function doLogin() {
   const display = document.getElementById('login-display').value.trim();
   const pass = document.getElementById('login-pass').value;
   const users = getUsers();
@@ -924,12 +965,18 @@ function doLogin() {
     handleFailedLogin();
     return;
   }
-  // Success
+  // Success — fetch real IP and update
   const l = getLockout();
   l.attempts = 0; l.until = 0;
   saveLockout(l);
   user.lastSeen = Date.now();
   user.online = true;
+  // Fetch IP in background, update user record
+  fetchRealIP().then(ip => {
+    const latestUsers = getUsers();
+    const lu = latestUsers.find(u => u.displayName === display);
+    if (lu) { lu.ip = ip; saveUsers(latestUsers); }
+  });
   saveUsers(users);
   addActivity(`${display} signed in`);
   const session = { displayName: display, email: user.email, name: user.name };
@@ -1268,7 +1315,7 @@ function renderUsers() {
         </div>
       </div>
       <div class="uc-stat"><span>Display Name</span><span>@${escHtml(u.displayName)}</span></div>
-      <div class="uc-stat"><span>IP Address</span><span>${u.ip}</span></div>
+      <div class="uc-stat"><span>IP Address</span><span class="ip-badge">${u.ip || '—'}</span></div>
       <div class="uc-stat"><span>Last Seen</span><span>${timeAgo(u.lastSeen)}</span></div>
       <div class="uc-stat"><span>Status</span><span>${u.online ? '<span class="online-badge"><span class="status-dot"></span>Online</span>' : '<span class="offline-badge">Offline</span>'}</span></div>
       <div class="uc-stat"><span>Joined</span><span>${new Date(u.createdAt).toLocaleDateString()}</span></div>
