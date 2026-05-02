@@ -534,6 +534,10 @@ a{text-decoration:none;color:inherit}
     <!-- REGISTER FORM -->
     <div id="tab-register" style="display:none">
       <div class="auth-error" id="reg-error"></div>
+      <div id="reg-lockout-notice" class="lockout-box show" style="display:none">
+        <div class="lockout-title">⚠️ Registration Locked</div>
+        <div class="lockout-msg">Too many failed login attempts. Registration is temporarily disabled. Please wait for the lockout to expire.</div>
+      </div>
       <div class="form-group">
         <label class="form-label">Full Name</label>
         <input class="form-input" id="reg-name" placeholder="John Doe" oninput="autoFillDisplay()"/>
@@ -920,15 +924,33 @@ function startLockoutUI(l) {
 }
 
 function setLoginDisabled(disabled) {
+  // Lock login fields
   document.getElementById('login-display').disabled = disabled;
   document.getElementById('login-pass').disabled = disabled;
   document.getElementById('login-btn').disabled = disabled;
+  // Lock register fields too — registration blocked during lockout
+  document.getElementById('reg-name').disabled = disabled;
+  document.getElementById('reg-email').disabled = disabled;
+  document.getElementById('reg-display').disabled = disabled;
+  const regBtn = document.querySelector('#tab-register .btn-primary');
+  if (regBtn) regBtn.disabled = disabled;
+  // Show / hide register lockout notice
+  const regNotice = document.getElementById('reg-lockout-notice');
+  if (regNotice) regNotice.style.display = disabled ? '' : 'none';
+  // Also disable the auth tab switching while locked
+  document.querySelectorAll('.auth-tab').forEach(t => t.disabled = disabled);
 }
 
 // ============================================================
 // REGISTER
 // ============================================================
 async function doRegister() {
+  // Block registration if account is currently locked out
+  const l = getLockout();
+  if (l.until && (Date.now() / 1000) < l.until) {
+    showError('reg-error', 'Registration is disabled while the account is locked.');
+    return;
+  }
   const name = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const display = document.getElementById('reg-display').value.trim();
