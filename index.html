@@ -1400,7 +1400,7 @@ a{text-decoration:none;color:inherit}
     <div class="lo-info" id="lo-info">
       Too many failed login attempts.<br>
       This device has been temporarily locked.<br>
-      <span id="lo-attempt-text">Attempt 1 of 3</span>
+      <span id="lo-attempt-text">Attempt 1 of 2</span>
     </div>
 
     <!-- Attempt dots -->
@@ -1423,7 +1423,8 @@ a{text-decoration:none;color:inherit}
 // CONSTANTS
 // ============================================================
 const PASS = 'STRESSASD';
-const LOCKOUT_DURATIONS = [5*60, 60*60]; // 1st fail → 5 min, 2nd+ → 1 hour
+const LOCKOUT_DURATIONS = [30*60]; // always 30 minutes
+const MAX_FREE_ATTEMPTS = 1; // 1st attempt is free (shake only), lock on 2nd
 
 // ============================================================
 // LOADING SCREEN
@@ -1468,16 +1469,17 @@ function saveUsers(u) { localStorage.setItem('nw_users', JSON.stringify(u)); }
     localStorage.removeItem('nw_session');
     localStorage.removeItem('nw_messages');
     localStorage.removeItem('nw_activity');
-    localStorage.removeItem('nw_lockout');
     localStorage.setItem('nw_wiped_v2', '1');
   }
+  // Clear old unversioned lockout key if it exists (one-time migration)
+  if (localStorage.getItem('nw_lockout')) localStorage.removeItem('nw_lockout');
 })();
 // ─────────────────────────────────────────────────────────────────────────────
 function getSession() { return JSON.parse(localStorage.getItem('nw_session') || 'null'); }
 function saveSession(s) { localStorage.setItem('nw_session', JSON.stringify(s)); }
 function clearSession() { localStorage.removeItem('nw_session'); }
-function getLockout() { return JSON.parse(localStorage.getItem('nw_lockout') || '{"attempts":0,"until":0}'); }
-function saveLockout(l) { localStorage.setItem('nw_lockout', JSON.stringify(l)); }
+function getLockout() { return JSON.parse(localStorage.getItem('nw_lockout_v3') || '{"attempts":0,"until":0}'); }
+function saveLockout(l) { localStorage.setItem('nw_lockout_v3', JSON.stringify(l)); }
 function getMessages() { return JSON.parse(localStorage.getItem('nw_messages') || '[]'); }
 function saveMessages(m) { localStorage.setItem('nw_messages', JSON.stringify(m)); }
 function getEvents() { return JSON.parse(localStorage.getItem('nw_events') || '[]'); }
@@ -1605,7 +1607,8 @@ function checkLockout() {
 
 function startLockoutUI(l) {
   const remaining = Math.max(1, Math.ceil(l.until - Date.now() / 1000));
-  const total = l.totalDuration || LOCKOUT_DURATIONS[Math.min((l.attempts || 1) - 1, LOCKOUT_DURATIONS.length - 1)];
+  const lockIdx = Math.max(0, Math.min((l.attempts || 1) - MAX_FREE_ATTEMPTS - 1, LOCKOUT_DURATIONS.length - 1));
+  const total = l.totalDuration || LOCKOUT_DURATIONS[lockIdx];
   const ratio = Math.min(1, remaining / total);
 
   const box = document.getElementById('lockout-box');
@@ -1674,7 +1677,7 @@ function showLockoutOverlay(l) {
   overlay.oncontextmenu = e => e.preventDefault();
   overlay.onkeydown = e => e.preventDefault();
 
-  // Attempt dots
+  // Attempt dots — 2 total, all lit when locked
   const attempts = Math.min(l.attempts, 2);
   for (let i = 1; i <= 2; i++) {
     const dot = document.getElementById(`lo-dot-${i}`);
@@ -1684,7 +1687,8 @@ function showLockoutOverlay(l) {
 
   // Calculate remaining and ratio for correct partial-position progress bars
   const remaining = Math.max(1, Math.ceil(l.until - Date.now() / 1000));
-  const total = l.totalDuration || LOCKOUT_DURATIONS[Math.min(attempts - 1, LOCKOUT_DURATIONS.length - 1)];
+  const lockIdx = Math.max(0, Math.min(attempts - MAX_FREE_ATTEMPTS - 1, LOCKOUT_DURATIONS.length - 1));
+  const total = l.totalDuration || LOCKOUT_DURATIONS[lockIdx];
   const ratio = Math.min(1, remaining / total);
 
   // Status progress bar — start from correct partial position
@@ -1702,9 +1706,9 @@ function showLockoutOverlay(l) {
     });
   }
 
-  const durationLabels = ['5 MINUTES', '1 HOUR'];
+  const durationLabels = ['30 MINUTES'];
   document.getElementById('lo-status-right').textContent =
-    `LOCKOUT: ${durationLabels[Math.min(attempts - 1, 1)]}`;
+    `LOCKOUT: ${durationLabels[0]}`;
 
   // Restart ring animations by cloning
   const ring = document.querySelector('.lo-ring-progress');
@@ -1941,9 +1945,6 @@ async function doLogin() {
 function handleFailedLogin() {
   const l = getLockout();
   l.attempts = (l.attempts || 0) + 1;
-  const idx = Math.min(l.attempts - 1, LOCKOUT_DURATIONS.length - 1);
-  l.totalDuration = LOCKOUT_DURATIONS[idx];
-  l.until = (Date.now() / 1000) + l.totalDuration;
   saveLockout(l);
 
   // Shake the auth card
@@ -1953,16 +1954,24 @@ function handleFailedLogin() {
   card.classList.add('shake');
   setTimeout(() => card.classList.remove('shake'), 500);
 
+  if (l.attempts <= MAX_FREE_ATTEMPTS) {
+    // 1st attempt: show warning with attempts remaining
+    showError('login-error', `Incorrect password. 1 attempt remaining before lockout.`);
+    return;
+  }
+
+  // 2nd attempt and beyond — trigger 30-min lockout
+  l.totalDuration = LOCKOUT_DURATIONS[0];
+  l.until = (Date.now() / 1000) + l.totalDuration;
+  saveLockout(l);
+
   // Small delay then explode into full-screen lockout
-  setTimeout(() => showLockoutOverlay(l), 400);
+  setTimeout(() => startLockoutUI(l), 400);
 }
 
 function handleFailedRegister() {
   const l = getLockout();
   l.attempts = (l.attempts || 0) + 1;
-  const idx = Math.min(l.attempts - 1, LOCKOUT_DURATIONS.length - 1);
-  l.totalDuration = LOCKOUT_DURATIONS[idx];
-  l.until = (Date.now() / 1000) + l.totalDuration;
   saveLockout(l);
 
   // Shake the auth card
@@ -1972,8 +1981,19 @@ function handleFailedRegister() {
   card.classList.add('shake');
   setTimeout(() => card.classList.remove('shake'), 500);
 
+  if (l.attempts <= MAX_FREE_ATTEMPTS) {
+    // 1st attempt: show warning with attempts remaining
+    showError('reg-error', `Incorrect workspace password. 1 attempt remaining before lockout.`);
+    return;
+  }
+
+  // 2nd attempt and beyond — trigger 30-min lockout
+  l.totalDuration = LOCKOUT_DURATIONS[0];
+  l.until = (Date.now() / 1000) + l.totalDuration;
+  saveLockout(l);
+
   // Small delay then explode into full-screen lockout
-  setTimeout(() => showLockoutOverlay(l), 400);
+  setTimeout(() => startLockoutUI(l), 400);
 }
 
 function doLogout() {
