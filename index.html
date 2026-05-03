@@ -6,54 +6,66 @@
 <title>NexusWork — Workplace Suite</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 /* ============================================================
    CSS VARIABLES & RESET
 ============================================================ */
 :root {
-  --bg: #0d0f14;
-  --bg2: #13161e;
-  --bg3: #1a1e2a;
-  --bg4: #222738;
-  --card: #181c27;
-  --border: #2a2f42;
-  --accent: #6c63ff;
-  --accent2: #a78bfa;
-  --accent-glow: rgba(108,99,255,0.25);
-  --text: #e8eaf0;
-  --text2: #9ca3af;
-  --text3: #6b7280;
-  --green: #34d399;
-  --red: #f87171;
-  --yellow: #fbbf24;
-  --blue: #60a5fa;
+  /* Dark mode — deep navy with electric teal accent */
+  --bg: #080c12;
+  --bg2: #0e1520;
+  --bg3: #141d2e;
+  --bg4: #1c2840;
+  --card: #0f1826;
+  --border: #1e2d45;
+  --accent: #00c9a7;
+  --accent2: #00e5c0;
+  --accent-dim: #007d68;
+  --accent-glow: rgba(0,201,167,0.2);
+  --highlight: #f59e0b;
+  --highlight-glow: rgba(245,158,11,0.2);
+  --text: #dde8f5;
+  --text2: #7e9ab8;
+  --text3: #435f7a;
+  --green: #10d9a0;
+  --red: #ff6b6b;
+  --yellow: #f59e0b;
+  --blue: #38bdf8;
   --sidebar-w: 240px;
   --topbar-h: 60px;
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
-  --font-head: 'Playfair Display', Georgia, serif;
-  --font-body: 'Outfit', 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.3);
+  --font-head: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'Fira Code', monospace;
   --transition: all 0.22s cubic-bezier(.4,0,.2,1);
 }
 [data-theme="light"] {
-  --bg: #f0f2f8;
-  --bg2: #e8eaf3;
+  /* Light mode — warm cream with deep teal */
+  --bg: #f5f0e8;
+  --bg2: #ede7da;
   --bg3: #ffffff;
-  --bg4: #dde0ee;
+  --bg4: #e0d9cc;
   --card: #ffffff;
-  --border: #d1d5e8;
-  --accent: #6c63ff;
-  --accent2: #7c3aed;
-  --accent-glow: rgba(108,99,255,0.15);
-  --text: #1a1d2e;
-  --text2: #4b5563;
-  --text3: #9ca3af;
-  --shadow: 0 4px 24px rgba(108,99,255,0.08);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --border: #d6cfc3;
+  --accent: #007a65;
+  --accent2: #009e84;
+  --accent-dim: #004d41;
+  --accent-glow: rgba(0,122,101,0.12);
+  --highlight: #d97706;
+  --highlight-glow: rgba(217,119,6,0.15);
+  --text: #1a1612;
+  --text2: #5a4f44;
+  --text3: #9c8f82;
+  --green: #059669;
+  --red: #dc2626;
+  --yellow: #d97706;
+  --blue: #0369a1;
+  --shadow: 0 8px 32px rgba(0,0,0,0.1);
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.06);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:var(--font-body);background:var(--bg);color:var(--text);overflow:hidden}
@@ -98,12 +110,12 @@ a{text-decoration:none;color:inherit}
 }
 .auth-bg::before{
   content:'';position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(108,99,255,0.12) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(0,201,167,0.09) 0%,transparent 70%);
   top:-100px;left:-100px;
 }
 .auth-bg::after{
   content:'';position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(167,139,250,0.08) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(245,158,11,0.06) 0%,transparent 70%);
   bottom:-50px;right:-50px;
 }
 .auth-card{
@@ -154,19 +166,236 @@ a{text-decoration:none;color:inherit}
 }
 .auth-error.show{display:block}
 .lockout-box{
-  background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);
-  border-radius:var(--radius-sm);padding:16px;text-align:center;margin-bottom:16px;display:none;
+  border-radius:var(--radius);padding:28px 20px;text-align:center;margin-bottom:16px;
+  display:none;position:relative;overflow:hidden;
+  background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);
 }
-.lockout-box.show{display:block}
-.lockout-title{font-size:0.85rem;font-weight:700;color:var(--yellow);margin-bottom:6px}
-.lockout-timer{font-size:1.6rem;font-weight:800;color:var(--yellow);font-variant-numeric:tabular-nums;font-family:var(--font-mono)}
-.lockout-msg{font-size:0.76rem;color:var(--text3);margin-top:4px}
+.lockout-box.show{display:block;animation:lockoutAppear 0.5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes lockoutAppear{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+.lockout-icon{
+  font-size:3rem;margin-bottom:10px;
+  animation:lockShake 0.6s ease 0.1s, lockPulse 2.5s ease 0.8s infinite;
+  display:block;
+}
+@keyframes lockShake{
+  0%{transform:rotate(0)}15%{transform:rotate(-12deg)}30%{transform:rotate(10deg)}
+  45%{transform:rotate(-8deg)}60%{transform:rotate(6deg)}75%{transform:rotate(-4deg)}100%{transform:rotate(0)}
+}
+@keyframes lockPulse{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(245,158,11,0))}
+  50%{transform:scale(1.1);filter:drop-shadow(0 0 12px rgba(245,158,11,0.6))}
+}
+.lockout-title{font-size:1rem;font-weight:800;color:var(--yellow);margin-bottom:4px;letter-spacing:-0.01em}
+.lockout-timer{
+  font-size:2.8rem;font-weight:800;color:var(--yellow);
+  font-variant-numeric:tabular-nums;font-family:var(--font-mono);
+  margin:8px 0;letter-spacing:-1px;
+  text-shadow:0 0 24px rgba(245,158,11,0.4);
+  animation:timerTick 1s ease infinite;
+}
+@keyframes timerTick{0%,100%{opacity:1}45%{opacity:0.7}}
+.lockout-msg{font-size:0.78rem;color:var(--text3);margin-top:6px;line-height:1.4}
+.lockout-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--yellow),var(--highlight));
+  transform-origin:left;
+}
 .pass-notice{
   display:flex;align-items:center;gap:8px;
-  background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);
+  background:rgba(0,201,167,0.07);border:1px solid rgba(0,201,167,0.2);
   border-radius:var(--radius-sm);padding:11px 14px;
   font-size:0.82rem;color:var(--text2);margin-bottom:18px;line-height:1.4;
 }
+
+/* ============================================================
+   FULL-SCREEN LOCKOUT OVERLAY
+============================================================ */
+#lockout-overlay{
+  position:fixed;inset:0;z-index:99999;
+  background:#000;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#lockout-overlay.active{ display:flex; }
+
+/* Scanlines */
+#lockout-overlay::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px);
+  animation:scanMove 8s linear infinite;
+}
+@keyframes scanMove{from{background-position:0 0}to{background-position:0 400px}}
+
+/* Red sweep flash on entry */
+#lockout-overlay::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,30,30,0.18) 0%,transparent 60%);
+  animation:redFlash 0.5s ease forwards;
+}
+@keyframes redFlash{0%{opacity:1}100%{opacity:0}}
+
+/* Canvas for particles */
+#lockout-canvas{position:absolute;inset:0;z-index:0}
+
+/* Glitch container */
+.lo-glitch-wrap{position:relative;z-index:5;text-align:center;padding:24px}
+
+/* Lock SVG ring */
+.lo-lock-ring{
+  width:160px;height:160px;margin:0 auto 28px;position:relative;
+}
+.lo-lock-ring svg{width:100%;height:100%}
+.lo-ring-circle{
+  fill:none;stroke:rgba(255,60,60,0.15);stroke-width:2;
+  animation:ringExpand 0.6s ease forwards;
+}
+@keyframes ringExpand{from{stroke-dasharray:0 502}to{stroke-dasharray:502 0}}
+.lo-ring-progress{
+  fill:none;stroke:#ff2020;stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:502;stroke-dashoffset:502;
+  animation:ringProgress 0.9s cubic-bezier(.4,0,.2,1) 0.2s forwards;
+  filter:drop-shadow(0 0 8px #ff2020);
+}
+@keyframes ringProgress{to{stroke-dashoffset:0}}
+.lo-ring-progress2{
+  fill:none;stroke:rgba(255,60,60,0.3);stroke-width:1;stroke-linecap:round;
+  stroke-dasharray:502;stroke-dashoffset:502;
+  animation:ringProgress2 1.4s ease 0.1s forwards;
+}
+@keyframes ringProgress2{to{stroke-dashoffset:0}}
+.lo-lock-icon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:3.2rem;line-height:1;
+  animation:lockBounceIn 0.7s cubic-bezier(.34,1.56,.64,1) 0.3s both,
+            lockGlowPulse 2s ease 1.2s infinite;
+  filter:drop-shadow(0 0 0 rgba(255,32,32,0));
+}
+@keyframes lockBounceIn{
+  from{opacity:0;transform:translate(-50%,-50%) scale(0.3) rotate(-20deg)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0deg)}
+}
+@keyframes lockGlowPulse{
+  0%,100%{filter:drop-shadow(0 0 4px rgba(255,32,32,0.4))}
+  50%{filter:drop-shadow(0 0 20px rgba(255,32,32,0.9))}
+}
+
+/* Glitch title */
+.lo-title{
+  font-family:var(--font-head);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;
+  color:#ff2020;letter-spacing:-1px;margin-bottom:6px;
+  animation:glitchText 4s ease 1s infinite;
+  position:relative;
+}
+.lo-title::before,.lo-title::after{
+  content:attr(data-text);position:absolute;left:0;right:0;top:0;
+  overflow:hidden;clip-path:polygon(0 0,100% 0,100% 0,0 0);
+}
+.lo-title::before{
+  color:#0ff;left:2px;
+  animation:glitchTop 4s ease 1s infinite;
+}
+.lo-title::after{
+  color:#f0f;left:-2px;
+  animation:glitchBot 4s ease 1s infinite;
+}
+@keyframes glitchText{
+  0%,90%,100%{transform:none;filter:none}
+  91%{transform:skewX(-8deg);filter:blur(0.5px)}
+  92%{transform:skewX(6deg);filter:none}
+  94%{transform:skewX(-4deg)}
+  96%{transform:none}
+}
+@keyframes glitchTop{
+  0%,90%,100%{clip-path:polygon(0 0,100% 0,100% 0,0 0)}
+  91%{clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);transform:translate(-3px)}
+  93%{clip-path:polygon(0 55%,100% 55%,100% 70%,0 70%);transform:translate(3px)}
+  95%{clip-path:polygon(0 0,100% 0,100% 0,0 0)}
+}
+@keyframes glitchBot{
+  0%,90%,100%{clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%)}
+  92%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(4px)}
+  94%{clip-path:polygon(0 70%,100% 70%,100% 90%,0 90%);transform:translate(-4px)}
+  96%{clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%)}
+}
+
+.lo-subtitle{
+  font-family:var(--font-mono);font-size:clamp(0.75rem,2vw,0.9rem);
+  color:rgba(255,80,80,0.7);letter-spacing:0.12em;text-transform:uppercase;
+  margin-bottom:36px;
+  animation:fadeInUp 0.5s ease 0.8s both;
+}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Countdown */
+.lo-countdown-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:fadeInUp 0.5s ease 1s both;margin-bottom:32px;
+}
+.lo-countdown-label{font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,100,100,0.5);letter-spacing:0.2em;text-transform:uppercase}
+.lo-countdown{
+  font-family:var(--font-mono);font-size:clamp(3rem,10vw,5.5rem);font-weight:800;
+  color:#ff2020;letter-spacing:-4px;line-height:1;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 0 40px rgba(255,32,32,0.6),0 0 80px rgba(255,32,32,0.3);
+  animation:countPulse 1s ease infinite;
+}
+@keyframes countPulse{
+  0%,100%{text-shadow:0 0 40px rgba(255,32,32,0.6),0 0 80px rgba(255,32,32,0.3)}
+  50%{text-shadow:0 0 60px rgba(255,32,32,0.9),0 0 120px rgba(255,32,32,0.5)}
+}
+
+/* Info bar */
+.lo-info{
+  font-family:var(--font-mono);font-size:clamp(0.68rem,2vw,0.78rem);
+  color:rgba(255,80,80,0.55);text-align:center;line-height:1.7;
+  animation:fadeInUp 0.5s ease 1.2s both;max-width:340px;
+}
+.lo-info span{color:rgba(255,120,120,0.8);font-weight:600}
+
+/* Attempt badges */
+.lo-attempts{
+  display:flex;gap:8px;margin-top:20px;
+  animation:fadeInUp 0.5s ease 1.4s both;
+}
+.lo-attempt-dot{
+  width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,60,60,0.4);
+  transition:all 0.3s ease;
+}
+.lo-attempt-dot.used{background:#ff2020;border-color:#ff2020;box-shadow:0 0 8px rgba(255,32,32,0.7)}
+
+/* Corner decorations */
+.lo-corner{position:absolute;width:40px;height:40px;z-index:5}
+.lo-corner.tl{top:20px;left:20px;border-top:2px solid rgba(255,60,60,0.5);border-left:2px solid rgba(255,60,60,0.5)}
+.lo-corner.tr{top:20px;right:20px;border-top:2px solid rgba(255,60,60,0.5);border-right:2px solid rgba(255,60,60,0.5)}
+.lo-corner.bl{bottom:20px;left:20px;border-bottom:2px solid rgba(255,60,60,0.5);border-left:2px solid rgba(255,60,60,0.5)}
+.lo-corner.br{bottom:20px;right:20px;border-bottom:2px solid rgba(255,60,60,0.5);border-right:2px solid rgba(255,60,60,0.5)}
+
+/* Bottom status bar */
+.lo-statusbar{
+  position:absolute;bottom:0;left:0;right:0;z-index:5;
+  border-top:1px solid rgba(255,40,40,0.2);
+  padding:10px 24px;display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-mono);font-size:0.68rem;color:rgba(255,80,80,0.4);
+  letter-spacing:0.08em;
+}
+.lo-statusbar-progress{
+  height:2px;position:absolute;top:0;left:0;
+  background:linear-gradient(90deg,#ff2020,#ff6060);
+  width:100%;
+  box-shadow:0 0 6px #ff2020;
+}
+
+/* Shake animation for wrong password */
+@keyframes wrongShake{
+  0%,100%{transform:translateX(0)}
+  15%{transform:translateX(-10px)}
+  30%{transform:translateX(8px)}
+  45%{transform:translateX(-6px)}
+  60%{transform:translateX(4px)}
+  75%{transform:translateX(-2px)}
+}
+.shake{animation:wrongShake 0.5s ease}
+
 
 /* ============================================================
    APP SHELL
@@ -237,7 +466,7 @@ a{text-decoration:none;color:inherit}
 }
 .topbar-ip{
   font-size:0.78rem;font-family:var(--font-mono);
-  background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.25);
+  background:var(--accent-glow);border:1px solid rgba(0,201,167,0.3);
   color:var(--accent2);padding:6px 12px;border-radius:var(--radius-sm);
   white-space:nowrap;letter-spacing:0.02em;cursor:default;
   display:none;
@@ -280,6 +509,12 @@ a{text-decoration:none;color:inherit}
 .panel-badge{font-size:0.7rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:99px}
 .activity-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.84rem}
 .activity-item:last-child{border-bottom:none}
+.activity-new{animation:activityPop 0.45s cubic-bezier(.22,1,.36,1)}
+@keyframes activityPop{
+  from{opacity:0;transform:translateX(-10px);background:rgba(0,201,167,0.07)}
+  60%{background:rgba(0,201,167,0.07)}
+  to{opacity:1;transform:translateX(0);background:transparent}
+}
 .activity-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:4px;flex-shrink:0}
 .activity-time{color:var(--text3);font-size:0.75rem;margin-top:2px}
 .quick-action{
@@ -294,7 +529,7 @@ a{text-decoration:none;color:inherit}
 .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - var(--topbar-h) - 48px);max-height:680px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .chat-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .chat-room-title{font-size:0.95rem;font-weight:700;flex:1}
-.online-count{font-size:0.78rem;color:var(--green);background:rgba(52,211,153,0.1);padding:3px 10px;border-radius:99px}
+.online-count{font-size:0.78rem;color:var(--green);background:rgba(16,217,160,0.1);padding:3px 10px;border-radius:99px}
 .chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:4px}
 .msg-group{display:flex;gap:10px;align-items:flex-end;margin-bottom:8px}
 .msg-group.own{flex-direction:row-reverse}
@@ -454,19 +689,59 @@ a{text-decoration:none;color:inherit}
 .uc-stat{display:flex;justify-content:space-between;font-size:0.78rem;padding:6px 0;border-bottom:1px solid var(--border);color:var(--text2)}
 .uc-stat:last-child{border-bottom:none}
 .uc-stat span:last-child{color:var(--text);font-weight:600}
-.online-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--green);background:rgba(52,211,153,0.1);padding:2px 8px;border-radius:99px}
+.online-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--green);background:rgba(16,217,160,0.1);padding:2px 8px;border-radius:99px}
 .offline-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--text3);background:var(--bg3);padding:2px 8px;border-radius:99px}
-.ip-badge{font-family:var(--font-mono);font-size:0.78rem;background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:6px;color:var(--accent2);letter-spacing:0.02em}
+.ip-badge{font-family:var(--font-mono);font-size:0.78rem;background:var(--accent-glow);border:1px solid rgba(0,201,167,0.25);padding:2px 8px;border-radius:6px;color:var(--accent2);letter-spacing:0.02em}
 
-/* RESPONSIVE */
+/* RESPONSIVE — comprehensive breakpoints */
+/* Tablet: 768px */
 @media(max-width:768px){
-  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:300}
-  .sidebar.open{transform:translateX(0)}
+  :root{--sidebar-w:260px;--topbar-h:56px}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:300;height:100dvh}
+  .sidebar.open{transform:translateX(0);box-shadow:8px 0 40px rgba(0,0,0,0.6)}
   .hamburger{display:flex}
   .dash-row{grid-template-columns:1fr}
-  .bot-panel{right:12px;left:12px;width:auto;bottom:80px}
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .bot-panel{right:12px;left:12px;width:auto;bottom:80px;max-height:70dvh}
   .content{padding:16px}
-  .cal-cell{min-height:56px}
+  .cal-cell{min-height:56px;font-size:0.78rem}
+  .cal-day-label{font-size:0.65rem}
+  .topbar-clock{display:none}
+  .topbar{padding:0 14px;gap:10px}
+  .auth-card{padding:28px 22px}
+  .modal{padding:22px}
+  .users-grid{grid-template-columns:1fr}
+  .chat-wrap{height:calc(100dvh - var(--topbar-h) - 32px)}
+}
+/* Mobile: 480px */
+@media(max-width:480px){
+  .dash-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-card{padding:14px}
+  .stat-card-val{font-size:1.4rem}
+  .auth-card{padding:24px 16px;border-radius:16px}
+  .auth-logo{font-size:1.5rem}
+  .topbar-ip{display:none!important}
+  .cal-cell{min-height:44px;padding:3px}
+  .cal-event-pill{font-size:0.58rem;padding:1px 4px}
+  .cal-add-btn{padding:6px 12px;font-size:0.8rem}
+  .bot-fab{bottom:16px;right:16px;width:46px;height:46px}
+  .vc-actions{flex-wrap:wrap}
+}
+/* Very small: 360px */
+@media(max-width:360px){
+  .dash-grid{grid-template-columns:1fr}
+  .auth-card{padding:20px 14px}
+  .topbar-title{font-size:0.92rem}
+}
+/* Desktop large: 1280px+ */
+@media(min-width:1280px){
+  :root{--sidebar-w:260px}
+  .dash-grid{grid-template-columns:repeat(4,1fr)}
+}
+/* Ensure proper height on mobile browsers (dvh) */
+@supports not (height:100dvh){
+  html,body,#app,.sidebar{height:100vh}
+  .chat-wrap{height:calc(100vh - var(--topbar-h) - 32px)}
 }
 /* OVERLAY FOR MOBILE SIDEBAR */
 .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:299;display:none}
@@ -490,6 +765,66 @@ a{text-decoration:none;color:inherit}
 .empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
 .empty-icon{font-size:2.4rem;margin-bottom:12px;opacity:0.5}
 .empty-text{font-size:0.9rem}
+
+/* AUTH SWITCH LINK */
+.auth-switch{text-align:center;margin-top:18px;font-size:0.83rem;color:var(--text3)}
+.auth-switch a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none}
+.auth-switch a:hover{text-decoration:underline}
+
+/* VIDEO CONFERENCE VIEW */
+.vc-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100dvh - var(--topbar-h) - 48px);padding:24px;text-align:center}
+.vc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px 36px;max-width:520px;width:100%;box-shadow:var(--shadow);animation:fadeIn 0.4s ease}
+.vc-icon-ring{
+  width:100px;height:100px;border-radius:50%;margin:0 auto 24px;
+  background:linear-gradient(135deg,rgba(0,201,167,0.15),rgba(56,189,248,0.1));
+  border:2px solid rgba(0,201,167,0.3);
+  display:flex;align-items:center;justify-content:center;font-size:2.6rem;
+  position:relative;
+}
+.vc-icon-ring::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1.5px dashed rgba(0,201,167,0.2);animation:ringRotate 12s linear infinite;
+}
+.vc-icon-ring::after{
+  content:'';position:absolute;inset:-16px;border-radius:50%;
+  border:1px dashed rgba(0,201,167,0.1);animation:ringRotate 20s linear infinite reverse;
+}
+@keyframes ringRotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.vc-title{font-family:var(--font-head);font-size:1.7rem;font-weight:700;margin-bottom:8px}
+.vc-sub{font-size:0.9rem;color:var(--text2);margin-bottom:6px}
+.vc-desc{font-size:0.83rem;color:var(--text3);line-height:1.6;margin-bottom:28px}
+.vc-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25);
+  color:var(--yellow);font-size:0.78rem;font-weight:600;padding:5px 14px;border-radius:99px;
+  margin-bottom:28px;
+}
+.vc-features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.vc-feature{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:14px;font-size:0.82rem;color:var(--text2);
+}
+.vc-feature-icon{font-size:1.2rem;margin-bottom:6px;display:block}
+.vc-feature-label{font-weight:600;color:var(--text);font-size:0.84rem}
+.vc-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.vc-btn-primary{
+  padding:12px 28px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-size:0.9rem;font-weight:700;
+  transition:var(--transition);box-shadow:0 4px 16px var(--accent-glow);
+  opacity:0.6;cursor:not-allowed;
+}
+.vc-btn-secondary{
+  padding:12px 24px;border-radius:var(--radius-sm);
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);font-size:0.9rem;font-weight:600;
+  transition:var(--transition);opacity:0.6;cursor:not-allowed;
+}
+@media(max-width:480px){
+  .vc-card{padding:28px 18px}
+  .vc-features{grid-template-columns:1fr}
+  .vc-title{font-size:1.3rem}
+}
 </style>
 </head>
 <body>
@@ -515,44 +850,51 @@ a{text-decoration:none;color:inherit}
     <!-- LOGIN FORM -->
     <div id="tab-login">
       <div class="lockout-box" id="lockout-box">
-        <div class="lockout-title">⚠️ Account Locked</div>
+        <span class="lockout-icon">🔒</span>
+        <div class="lockout-title">Website Temporarily Locked</div>
         <div class="lockout-timer" id="lockout-timer">00:00</div>
         <div class="lockout-msg" id="lockout-msg">Too many failed attempts</div>
+        <div class="lockout-bar" id="lockout-bar"></div>
       </div>
       <div class="auth-error" id="login-error"></div>
       <div class="form-group">
-        <label class="form-label">Display Name</label>
-        <input class="form-input" id="login-display" placeholder="Your display name" autocomplete="username"/>
+        <label class="form-label">Username / Email</label>
+        <input class="form-input" id="login-display" placeholder="Your username" autocomplete="username"/>
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
         <input class="form-input" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
       </div>
-      <button class="btn-primary" id="login-btn" onclick="doLogin()">Sign In</button>
+      <button class="btn-primary" id="login-btn" onclick="doLogin()">Sign In →</button>
+      <div class="auth-switch">Don't have an account? <a onclick="switchTab('register')">Register here</a></div>
     </div>
 
     <!-- REGISTER FORM -->
     <div id="tab-register" style="display:none">
       <div class="auth-error" id="reg-error"></div>
       <div id="reg-lockout-notice" class="lockout-box show" style="display:none">
-        <div class="lockout-title">⚠️ Registration Locked</div>
-        <div class="lockout-msg">Too many failed login attempts. Registration is temporarily disabled. Please wait for the lockout to expire.</div>
+        <span class="lockout-icon">🔒</span>
+        <div class="lockout-title">Registration Locked</div>
+        <div class="lockout-timer" id="reg-lockout-timer">00:00</div>
+        <div class="lockout-msg">Incorrect workspace password. Registration is temporarily disabled. Wait for the lockout to expire.</div>
+        <div class="lockout-bar"></div>
       </div>
       <div class="form-group">
-        <label class="form-label">Full Name</label>
-        <input class="form-input" id="reg-name" placeholder="John Doe" oninput="autoFillDisplay()"/>
+        <label class="form-label">Username</label>
+        <input class="form-input" id="reg-name" placeholder="e.g. john_doe" oninput="autoFillDisplay()"/>
+        <div class="form-hint">Letters, numbers and underscores only. This is your unique identity.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Email</label>
         <input class="form-input" id="reg-email" type="email" placeholder="john@company.com"/>
       </div>
       <div class="form-group">
-        <label class="form-label">Display Name</label>
-        <input class="form-input" id="reg-display" placeholder="Auto-filled from name"/>
-        <div class="form-hint">Auto-generated from your full name. You may edit it.</div>
+        <label class="form-label">Access Password</label>
+        <input class="form-input" id="reg-pass-confirm" type="password" placeholder="Enter the workspace password"/>
+        <div class="form-hint">Enter the workspace access password provided by your admin.</div>
       </div>
-      <div class="pass-notice">🔒 A secure password will be assigned to your account automatically.</div>
-      <button class="btn-primary" onclick="doRegister()">Create Account</button>
+      <button class="btn-primary" onclick="doRegister()">Create Account →</button>
+      <div class="auth-switch">Already have an account? <a onclick="switchTab('login')">Sign in</a></div>
     </div>
   </div>
 </div>
@@ -583,6 +925,10 @@ a{text-decoration:none;color:inherit}
       <div class="nav-item" onclick="showView('users')">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Team Members
+      </div>
+      <div class="nav-item" onclick="showView('video')">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.868v6.264a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        Video Calls <span style="font-size:0.6rem;background:rgba(245,158,11,0.2);color:var(--yellow);padding:1px 6px;border-radius:4px;margin-left:4px">Soon</span>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -672,6 +1018,56 @@ a{text-decoration:none;color:inherit}
         <div class="users-grid" id="users-grid"></div>
       </div>
 
+      <!-- VIDEO CONFERENCE VIEW -->
+      <div class="view" id="view-video">
+        <div class="vc-wrap">
+          <div class="vc-card">
+            <div class="vc-icon-ring">📹</div>
+            <div class="vc-badge">🚧 Coming Soon</div>
+            <div class="vc-title">Video Conferencing</div>
+            <div class="vc-sub">HD video calls for your entire team</div>
+            <div class="vc-desc">We're building a powerful video conferencing experience right inside NexusWork. No third-party apps, no context switching — just seamless calls with your team.</div>
+            <div class="vc-features">
+              <div class="vc-feature">
+                <span class="vc-feature-icon">🎥</span>
+                <div class="vc-feature-label">HD Video</div>
+                <div>Crystal-clear 1080p video with noise cancellation</div>
+              </div>
+              <div class="vc-feature">
+                <span class="vc-feature-icon">🖥️</span>
+                <div class="vc-feature-label">Screen Share</div>
+                <div>Share your screen or specific app windows</div>
+              </div>
+              <div class="vc-feature">
+                <span class="vc-feature-icon">💬</span>
+                <div class="vc-feature-label">In-Call Chat</div>
+                <div>Chat alongside your video without interrupting</div>
+              </div>
+              <div class="vc-feature">
+                <span class="vc-feature-icon">🔗</span>
+                <div class="vc-feature-label">Meeting Links</div>
+                <div>Shareable room links, no account required to join</div>
+              </div>
+              <div class="vc-feature">
+                <span class="vc-feature-icon">🔴</span>
+                <div class="vc-feature-label">Recording</div>
+                <div>Record meetings and auto-save to your calendar</div>
+              </div>
+              <div class="vc-feature">
+                <span class="vc-feature-icon">✋</span>
+                <div class="vc-feature-label">Reactions</div>
+                <div>Raise hand, react with emoji, and more</div>
+              </div>
+            </div>
+            <div class="vc-actions">
+              <button class="vc-btn-primary" disabled title="Coming soon">Start a Meeting</button>
+              <button class="vc-btn-secondary" disabled title="Coming soon">Join with Code</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </main>
   </div>
 </div>
@@ -703,26 +1099,96 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
-<!-- AI BOT FAB -->
-<button class="bot-fab" id="bot-fab" onclick="toggleBot()" title="AI Assistant" style="display:none">🤖</button>
+<!-- AI BOT FAB — Coming Soon -->
+<button class="bot-fab" id="bot-fab" onclick="toggleBot()" title="Nexus AI — Coming Soon" style="display:none;font-size:1.5rem">✦</button>
 
 <!-- AI BOT PANEL -->
 <div class="bot-panel" id="bot-panel">
   <div class="bot-header">
-    <div class="bot-avatar">🤖</div>
+    <div class="bot-avatar" style="background:linear-gradient(135deg,var(--accent-dim),var(--accent))">✦</div>
     <div>
-      <div class="bot-name">Nexus AI</div>
-      <div class="bot-status"><span class="status-dot"></span>Online</div>
+      <div class="bot-name">Nexus AI <span class="cs-badge">Coming Soon</span></div>
+      <div class="bot-status" style="color:var(--yellow)"><span class="status-dot" style="background:var(--yellow);animation:none"></span>In Development</div>
     </div>
     <div style="flex:1"></div>
     <button class="bot-close" onclick="toggleBot()">×</button>
   </div>
-  <div class="bot-messages" id="bot-messages"></div>
-  <div class="bot-input-wrap">
-    <input class="bot-input" id="bot-input" placeholder="Ask anything…" onkeydown="botKeydown(event)"/>
-    <button class="bot-send" onclick="sendBotMsg()">
+  <div class="bot-messages" id="bot-messages" style="align-items:center;justify-content:center">
+    <div class="cs-splash">
+      <div class="cs-icon">✦</div>
+      <div class="cs-title">Nexus AI</div>
+      <div class="cs-sub">Powered by Gemini — releasing soon.</div>
+      <div class="cs-desc">We're putting the final touches on your AI workplace assistant. It will support full conversations, smart scheduling, and team insights.</div>
+      <div class="cs-pills">
+        <span class="cs-pill">💬 Smart chat</span>
+        <span class="cs-pill">📅 Calendar AI</span>
+        <span class="cs-pill">👥 Team insights</span>
+      </div>
+    </div>
+  </div>
+  <div class="bot-input-wrap" style="opacity:0.4;pointer-events:none">
+    <input class="bot-input" placeholder="Available soon…" disabled/>
+    <button class="bot-send" disabled style="opacity:0.5">
       <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
     </button>
+  </div>
+</div>
+
+<!-- ============================================================
+     FULL-SCREEN LOCKOUT OVERLAY
+============================================================ -->
+<div id="lockout-overlay">
+  <canvas id="lockout-canvas"></canvas>
+
+  <!-- Corner brackets -->
+  <div class="lo-corner tl"></div>
+  <div class="lo-corner tr"></div>
+  <div class="lo-corner bl"></div>
+  <div class="lo-corner br"></div>
+
+  <div class="lo-glitch-wrap">
+    <!-- Animated lock ring -->
+    <div class="lo-lock-ring">
+      <svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg">
+        <circle class="lo-ring-circle" cx="85" cy="85" r="80"/>
+        <circle class="lo-ring-progress2" cx="85" cy="85" r="80"
+          transform="rotate(-90 85 85)"/>
+        <circle class="lo-ring-progress" cx="85" cy="85" r="80"
+          transform="rotate(-90 85 85)"/>
+      </svg>
+      <div class="lo-lock-icon">🔒</div>
+    </div>
+
+    <!-- Glitch title -->
+    <div class="lo-title" data-text="ACCESS DENIED">ACCESS DENIED</div>
+    <div class="lo-subtitle">Security Protocol Activated</div>
+
+    <!-- Big countdown -->
+    <div class="lo-countdown-wrap">
+      <div class="lo-countdown-label">Locked For</div>
+      <div class="lo-countdown" id="lo-countdown">00:00</div>
+    </div>
+
+    <!-- Info text -->
+    <div class="lo-info" id="lo-info">
+      Too many failed login attempts.<br>
+      This device has been temporarily locked.<br>
+      <span id="lo-attempt-text">Attempt 1 of 3</span>
+    </div>
+
+    <!-- Attempt dots -->
+    <div class="lo-attempts" id="lo-attempts">
+      <div class="lo-attempt-dot" id="lo-dot-1"></div>
+      <div class="lo-attempt-dot" id="lo-dot-2"></div>
+      <div class="lo-attempt-dot" id="lo-dot-3"></div>
+    </div>
+  </div>
+
+  <!-- Status bar -->
+  <div class="lo-statusbar">
+    <span>NEXUSWORK SECURITY</span>
+    <div class="lo-statusbar-progress" id="lo-status-progress"></div>
+    <span id="lo-status-right">LOCKOUT ACTIVE</span>
   </div>
 </div>
 
@@ -768,6 +1234,19 @@ function toggleTheme() {
 // ============================================================
 function getUsers() { return JSON.parse(localStorage.getItem('nw_users') || '[]'); }
 function saveUsers(u) { localStorage.setItem('nw_users', JSON.stringify(u)); }
+
+// ── ONE-TIME RESET: wipe all previously stored team members & sessions ───────
+(function clearLegacyUsers() {
+  if (!localStorage.getItem('nw_wiped_v2')) {
+    localStorage.removeItem('nw_users');
+    localStorage.removeItem('nw_session');
+    localStorage.removeItem('nw_messages');
+    localStorage.removeItem('nw_activity');
+    localStorage.removeItem('nw_lockout');
+    localStorage.setItem('nw_wiped_v2', '1');
+  }
+})();
+// ─────────────────────────────────────────────────────────────────────────────
 function getSession() { return JSON.parse(localStorage.getItem('nw_session') || 'null'); }
 function saveSession(s) { localStorage.setItem('nw_session', JSON.stringify(s)); }
 function clearSession() { localStorage.removeItem('nw_session'); }
@@ -872,9 +1351,10 @@ function switchTab(tab) {
 }
 
 function autoFillDisplay() {
-  const name = document.getElementById('reg-name').value.trim();
-  const display = name.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
-  document.getElementById('reg-display').value = display;
+  // username-only: lowercase, replace spaces with underscore, strip special chars
+  const val = document.getElementById('reg-name').value;
+  const clean = val.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  document.getElementById('reg-name').value = clean;
 }
 
 function showError(id, msg) {
@@ -894,33 +1374,240 @@ function checkLockout() {
   const now = Date.now() / 1000;
   if (l.until && now < l.until) {
     startLockoutUI(l);
-  } else if (l.until && now >= l.until) {
-    // Unlock but keep attempt count if it was a real lockout
-    // Reset after successful time
   }
 }
 
 function startLockoutUI(l) {
+  const remaining = Math.max(1, Math.ceil(l.until - Date.now() / 1000));
+  const total = l.totalDuration || LOCKOUT_DURATIONS[Math.min((l.attempts || 1) - 1, LOCKOUT_DURATIONS.length - 1)];
+  const ratio = Math.min(1, remaining / total);
+
   const box = document.getElementById('lockout-box');
-  box.classList.add('show');
+  if (box) {
+    box.classList.add('show');
+    const bar = document.getElementById('lockout-bar');
+    if (bar) {
+      bar.style.animation = 'none';
+      void bar.offsetWidth;
+      // Start from correct partial position and animate to 0 over remaining time
+      bar.style.transformOrigin = 'left';
+      bar.style.transform = `scaleX(${ratio})`;
+      bar.style.transition = `transform ${remaining}s linear`;
+      // Force a reflow then animate to 0
+      void bar.offsetWidth;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          bar.style.transform = 'scaleX(0)';
+        });
+      });
+    }
+  }
+
+  // Also show register lockout box with timer
+  const regNotice = document.getElementById('reg-lockout-notice');
+  if (regNotice) {
+    regNotice.style.display = '';
+    regNotice.classList.add('show');
+    // Animate register lockout bar the same way
+    const regBar = regNotice.querySelector('.lockout-bar');
+    if (regBar) {
+      regBar.style.animation = 'none';
+      void regBar.offsetWidth;
+      regBar.style.transformOrigin = 'left';
+      regBar.style.transform = `scaleX(${ratio})`;
+      regBar.style.transition = `transform ${remaining}s linear`;
+      void regBar.offsetWidth;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          regBar.style.transform = 'scaleX(0)';
+        });
+      });
+    }
+    const regTimer = document.getElementById('reg-lockout-timer');
+    if (regTimer) {
+      const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+      const s = (remaining % 60).toString().padStart(2, '0');
+      regTimer.textContent = `${m}:${s}`;
+    }
+  }
   setLoginDisabled(true);
-  if (lockoutInterval) clearInterval(lockoutInterval);
-  lockoutInterval = setInterval(() => {
+  showLockoutOverlay(l);
+}
+
+// ============================================================
+// FULL-SCREEN LOCKOUT OVERLAY ENGINE
+// ============================================================
+let loInterval = null;
+let loParticleRAF = null;
+
+function showLockoutOverlay(l) {
+  const overlay = document.getElementById('lockout-overlay');
+  overlay.classList.add('active');
+
+  // Attempt dots
+  const attempts = Math.min(l.attempts, 3);
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById(`lo-dot-${i}`);
+    if (dot) dot.classList.toggle('used', i <= attempts);
+  }
+  document.getElementById('lo-attempt-text').textContent = `Attempt ${attempts} of 3`;
+
+  // Calculate remaining and ratio for correct partial-position progress bars
+  const remaining = Math.max(1, Math.ceil(l.until - Date.now() / 1000));
+  const total = l.totalDuration || LOCKOUT_DURATIONS[Math.min(attempts - 1, LOCKOUT_DURATIONS.length - 1)];
+  const ratio = Math.min(1, remaining / total);
+
+  // Status progress bar — start from correct partial position
+  const prog = document.getElementById('lo-status-progress');
+  if (prog) {
+    prog.style.animation = 'none';
+    void prog.offsetWidth;
+    prog.style.width = (ratio * 100) + '%';
+    prog.style.transition = `width ${remaining}s linear`;
+    void prog.offsetWidth;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        prog.style.width = '0%';
+      });
+    });
+  }
+
+  const durationLabels = ['5 MINUTES', '15 MINUTES', '1 HOUR'];
+  document.getElementById('lo-status-right').textContent =
+    `LOCKOUT: ${durationLabels[Math.min(attempts - 1, 2)]}`;
+
+  // Restart ring animations by cloning
+  const ring = document.querySelector('.lo-ring-progress');
+  if (ring) { const p = ring.parentNode; const c = ring.cloneNode(true); ring.remove(); p.appendChild(c); }
+
+  startLockoutParticles();
+
+  // Immediately show correct time (don't wait 1 second for first tick)
+  const initM = Math.floor(remaining / 60).toString().padStart(2, '0');
+  const initS = (remaining % 60).toString().padStart(2, '0');
+  document.getElementById('lo-countdown').textContent = `${initM}:${initS}`;
+  const inlineTimer = document.getElementById('lockout-timer');
+  if (inlineTimer) inlineTimer.textContent = `${initM}:${initS}`;
+  const regTimer = document.getElementById('reg-lockout-timer');
+  if (regTimer) regTimer.textContent = `${initM}:${initS}`;
+
+  if (loInterval) clearInterval(loInterval);
+  loInterval = setInterval(() => {
     const now = Date.now() / 1000;
-    const remaining = Math.max(0, Math.ceil(l.until - now));
-    if (remaining <= 0) {
-      clearInterval(lockoutInterval);
-      box.classList.remove('show');
-      setLoginDisabled(false);
+    const rem = Math.max(0, Math.ceil(l.until - now));
+    if (rem <= 0) {
+      clearInterval(loInterval);
+      hideLockoutOverlay();
       return;
     }
-    const m = Math.floor(remaining / 60).toString().padStart(2, '0');
-    const s = (remaining % 60).toString().padStart(2, '0');
-    document.getElementById('lockout-timer').textContent = `${m}:${s}`;
-    const attempt = l.attempts;
-    const msgs = ['','Locked for 5 minutes','Locked for 15 minutes','Locked for 1 hour'];
-    document.getElementById('lockout-msg').textContent = msgs[attempt] || 'Account locked';
+    const m = Math.floor(rem / 60).toString().padStart(2, '0');
+    const s = (rem % 60).toString().padStart(2, '0');
+    document.getElementById('lo-countdown').textContent = `${m}:${s}`;
+    const inlineTimer = document.getElementById('lockout-timer');
+    if (inlineTimer) inlineTimer.textContent = `${m}:${s}`;
+    const regTimer = document.getElementById('reg-lockout-timer');
+    if (regTimer) regTimer.textContent = `${m}:${s}`;
   }, 1000);
+}
+
+function hideLockoutOverlay() {
+  const overlay = document.getElementById('lockout-overlay');
+  overlay.style.transition = 'opacity 0.8s ease';
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    overlay.style.opacity = '';
+    overlay.style.transition = '';
+  }, 800);
+  if (loParticleRAF) { cancelAnimationFrame(loParticleRAF); loParticleRAF = null; }
+  const box = document.getElementById('lockout-box');
+  if (box) box.classList.remove('show');
+  // Reset the lockout bars
+  const lockBar = document.getElementById('lockout-bar');
+  if (lockBar) { lockBar.style.transition = ''; lockBar.style.transform = ''; lockBar.style.animation = 'none'; }
+  const prog = document.getElementById('lo-status-progress');
+  if (prog) { prog.style.transition = ''; prog.style.width = ''; prog.style.animation = 'none'; }
+  const regNotice = document.getElementById('reg-lockout-notice');
+  if (regNotice) {
+    regNotice.classList.remove('show');
+    regNotice.style.display = 'none';
+    const regBar = regNotice.querySelector('.lockout-bar');
+    if (regBar) { regBar.style.transition = ''; regBar.style.transform = ''; regBar.style.animation = 'none'; }
+  }
+  setLoginDisabled(false);
+}
+
+function startLockoutParticles() {
+  const canvas = document.getElementById('lockout-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const resizeObs = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resizeObs);
+
+  const PCOUNT = window.innerWidth < 480 ? 50 : 90;
+  const makeP = () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: -(0.3 + Math.random() * 1.0),
+    size: 0.8 + Math.random() * 2.2,
+    alpha: 0.15 + Math.random() * 0.5,
+    life: Math.random(),
+    decay: 0.002 + Math.random() * 0.004,
+  });
+
+  const particles = Array.from({ length: PCOUNT }, makeP);
+  let frame = 0;
+
+  function loop() {
+    loParticleRAF = requestAnimationFrame(loop);
+    frame++;
+    const W = canvas.width, H = canvas.height;
+
+    ctx.fillStyle = 'rgba(0,0,0,0.22)';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(255,20,20,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 44) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 44) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+    // Glitch strips
+    if (frame % 80 < 2) {
+      ctx.fillStyle = `rgba(255,0,0,${0.06 + Math.random() * 0.1})`;
+      ctx.fillRect(0, Math.random() * H, W, 1 + Math.random() * 4);
+    }
+
+    // Particles
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+      if (p.life <= 0 || p.y < -5) Object.assign(p, makeP(), { y: H + 5, vy: -(0.3 + Math.random()) });
+      const a = Math.max(0, p.life) * p.alpha;
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.shadowColor = '#ff2020';
+      ctx.shadowBlur = 8;
+      ctx.fillStyle = `hsl(${Math.random() < 0.1 ? 0 : 0},90%,${50 + Math.random()*15}%)`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Center radial glow
+    const cx = W / 2, cy = H / 2;
+    const gr = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
+    gr.addColorStop(0, `rgba(255,0,0,${0.035 + 0.02 * Math.sin(frame * 0.05)})`);
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gr;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  if (loParticleRAF) cancelAnimationFrame(loParticleRAF);
+  loop();
 }
 
 function setLoginDisabled(disabled) {
@@ -928,16 +1615,16 @@ function setLoginDisabled(disabled) {
   document.getElementById('login-display').disabled = disabled;
   document.getElementById('login-pass').disabled = disabled;
   document.getElementById('login-btn').disabled = disabled;
-  // Lock register fields too — registration blocked during lockout
+  // Lock register fields too
   document.getElementById('reg-name').disabled = disabled;
   document.getElementById('reg-email').disabled = disabled;
-  document.getElementById('reg-display').disabled = disabled;
+  document.getElementById('reg-pass-confirm').disabled = disabled;
   const regBtn = document.querySelector('#tab-register .btn-primary');
   if (regBtn) regBtn.disabled = disabled;
   // Show / hide register lockout notice
   const regNotice = document.getElementById('reg-lockout-notice');
   if (regNotice) regNotice.style.display = disabled ? '' : 'none';
-  // Also disable the auth tab switching while locked
+  // Disable tab switching while locked
   document.querySelectorAll('.auth-tab').forEach(t => t.disabled = disabled);
 }
 
@@ -945,23 +1632,38 @@ function setLoginDisabled(disabled) {
 // REGISTER
 // ============================================================
 async function doRegister() {
-  // Block registration if account is currently locked out
+  // Block if locked out
   const l = getLockout();
   if (l.until && (Date.now() / 1000) < l.until) {
     showError('reg-error', 'Registration is disabled while the account is locked.');
     return;
   }
-  const name = document.getElementById('reg-name').value.trim();
+  const username = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
-  const display = document.getElementById('reg-display').value.trim();
-  if (!name || !email || !display) return showError('reg-error', 'All fields are required.');
+  const passEntered = document.getElementById('reg-pass-confirm').value;
+
+  // Validate username
+  if (!username) return showError('reg-error', 'Username is required.');
+  if (!/^[a-z0-9_]{2,24}$/.test(username)) return showError('reg-error', 'Username: 2–24 characters, lowercase letters, numbers and underscores only.');
+  if (!email) return showError('reg-error', 'Email is required.');
   if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) return showError('reg-error', 'Enter a valid email address.');
+
+  // Verify workspace password
+  if (!passEntered) return showError('reg-error', 'Enter the workspace access password.');
+  if (passEntered !== PASS) {
+    handleFailedRegister();
+    return;
+  }
+
   const users = getUsers();
   if (users.find(u => u.email === email)) return showError('reg-error', 'Email already registered.');
-  if (users.find(u => u.displayName === display)) return showError('reg-error', 'Display name already taken.');
+  if (users.find(u => u.displayName === username)) return showError('reg-error', 'Username already taken. Choose another.');
+
   const ip = await fetchRealIP();
   const user = {
-    name, email, displayName: display,
+    name: username,
+    email,
+    displayName: username,
     password: PASS,
     ip,
     createdAt: Date.now(),
@@ -970,9 +1672,9 @@ async function doRegister() {
   };
   users.push(user);
   saveUsers(users);
-  addActivity(`${display} joined NexusWork`);
+  addActivity(`@${username} joined NexusWork`);
   switchTab('login');
-  document.getElementById('login-display').value = display;
+  document.getElementById('login-display').value = username;
 }
 
 // ============================================================
@@ -1010,10 +1712,38 @@ function handleFailedLogin() {
   const l = getLockout();
   l.attempts = (l.attempts || 0) + 1;
   const idx = Math.min(l.attempts - 1, LOCKOUT_DURATIONS.length - 1);
-  l.until = (Date.now() / 1000) + LOCKOUT_DURATIONS[idx];
+  l.totalDuration = LOCKOUT_DURATIONS[idx];
+  l.until = (Date.now() / 1000) + l.totalDuration;
   saveLockout(l);
-  showError('login-error', `Incorrect credentials. Account locked.`);
-  startLockoutUI(l);
+
+  // Shake the auth card
+  const card = document.querySelector('.auth-card');
+  card.classList.remove('shake');
+  void card.offsetWidth;
+  card.classList.add('shake');
+  setTimeout(() => card.classList.remove('shake'), 500);
+
+  // Small delay then explode into full-screen lockout
+  setTimeout(() => showLockoutOverlay(l), 400);
+}
+
+function handleFailedRegister() {
+  const l = getLockout();
+  l.attempts = (l.attempts || 0) + 1;
+  const idx = Math.min(l.attempts - 1, LOCKOUT_DURATIONS.length - 1);
+  l.totalDuration = LOCKOUT_DURATIONS[idx];
+  l.until = (Date.now() / 1000) + l.totalDuration;
+  saveLockout(l);
+
+  // Shake the auth card
+  const card = document.querySelector('.auth-card');
+  card.classList.remove('shake');
+  void card.offsetWidth;
+  card.classList.add('shake');
+  setTimeout(() => card.classList.remove('shake'), 500);
+
+  // Small delay then explode into full-screen lockout
+  setTimeout(() => showLockoutOverlay(l), 400);
 }
 
 function doLogout() {
@@ -1051,7 +1781,8 @@ const viewTitles = {
   'dashboard': 'Dashboard',
   'global-chat': 'Global Chat',
   'calendar': 'Calendar',
-  'users': 'Team Members'
+  'users': 'Team Members',
+  'video': 'Video Conferencing'
 };
 
 function showView(name) {
@@ -1085,21 +1816,18 @@ function closeSidebar() {
 // DASHBOARD
 // ============================================================
 function renderDashboard() {
-  const session = getSession();
   const users = getUsers();
   const messages = getMessages();
   const events = getEvents();
-  const activity = getActivity();
 
   const statsData = [
-    { icon: '👥', label: 'Team Members', val: users.length, color: 'rgba(108,99,255,0.15)' },
-    { icon: '💬', label: 'Messages', val: messages.length, color: 'rgba(96,165,250,0.15)' },
-    { icon: '📅', label: 'Events', val: events.length, color: 'rgba(52,211,153,0.15)' },
-    { icon: '🟢', label: 'Online Now', val: users.filter(u => u.online).length, color: 'rgba(52,211,153,0.15)' },
+    { icon: '👥', label: 'Team Members', val: users.length, color: 'rgba(0,201,167,0.13)' },
+    { icon: '💬', label: 'Messages',     val: messages.length, color: 'rgba(56,189,248,0.13)' },
+    { icon: '📅', label: 'Events',       val: events.length, color: 'rgba(245,158,11,0.13)' },
+    { icon: '🟢', label: 'Online Now',   val: users.filter(u => u.online).length, color: 'rgba(16,217,160,0.13)' },
   ];
 
-  const sc = document.getElementById('stat-cards');
-  sc.innerHTML = statsData.map(s => `
+  document.getElementById('stat-cards').innerHTML = statsData.map(s => `
     <div class="stat-card">
       <div class="stat-card-icon" style="background:${s.color}">${s.icon}</div>
       <div class="stat-card-val">${s.val}</div>
@@ -1107,35 +1835,57 @@ function renderDashboard() {
     </div>
   `).join('');
 
-  // Activity
-  const al = document.getElementById('activity-list');
-  document.getElementById('activity-badge').textContent = activity.length;
-  if (activity.length === 0) {
-    al.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No activity yet</div></div>';
-  } else {
-    al.innerHTML = activity.slice(0, 6).map(a => `
-      <div class="activity-item">
-        <div class="activity-dot"></div>
-        <div>
-          <div>${a.text}</div>
-          <div class="activity-time">${timeAgo(a.time)}</div>
-        </div>
-      </div>
-    `).join('');
-  }
+  refreshActivity();
 
-  // Quick actions
+  // Quick actions (only set once)
   document.getElementById('quick-actions').innerHTML = [
-    { icon: '💬', label: 'Open Global Chat', color: 'rgba(108,99,255,0.15)', view: 'global-chat' },
-    { icon: '📅', label: 'View Calendar', color: 'rgba(96,165,250,0.15)', view: 'calendar' },
-    { icon: '👥', label: 'Team Members', color: 'rgba(52,211,153,0.15)', view: 'users' },
-    { icon: '🤖', label: 'Ask AI Assistant', color: 'rgba(251,191,36,0.15)', action: 'openBot' },
+    { icon: '💬', label: 'Open Global Chat', color: 'rgba(0,201,167,0.13)',   view: 'global-chat' },
+    { icon: '📅', label: 'View Calendar',    color: 'rgba(56,189,248,0.13)',  view: 'calendar' },
+    { icon: '👥', label: 'Team Members',     color: 'rgba(16,217,160,0.13)', view: 'users' },
+    { icon: '✦',  label: 'Ask AI Assistant', color: 'rgba(245,158,11,0.13)', action: 'openBot' },
   ].map(qa => `
     <div class="quick-action" onclick="${qa.view ? `showView('${qa.view}')` : qa.action + '()'}">
       <div class="qa-icon" style="background:${qa.color}">${qa.icon}</div>
       ${qa.label}
     </div>
   `).join('');
+}
+
+// Lightweight: refresh only the activity list + badge + stat numbers
+function refreshActivity() {
+  const activity = getActivity();
+  const al = document.getElementById('activity-list');
+  if (!al) return;
+
+  document.getElementById('activity-badge').textContent = activity.length;
+
+  if (activity.length === 0) {
+    al.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No activity yet</div></div>';
+  } else {
+    // Animate new items: compare current top id vs rendered
+    const topId = activity[0]?.time;
+    const currentTop = al.dataset.topId;
+    al.dataset.topId = topId;
+
+    al.innerHTML = activity.slice(0, 8).map((a, i) => `
+      <div class="activity-item${i === 0 && String(topId) !== currentTop ? ' activity-new' : ''}">
+        <div class="activity-dot"></div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.85rem">${escHtml(a.text)}</div>
+          <div class="activity-time">${timeAgo(a.time)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Also refresh stat numbers without full re-render
+  const users = getUsers();
+  const messages = getMessages();
+  const events = getEvents();
+  const vals = [users.length, messages.length, events.length, users.filter(u=>u.online).length];
+  document.querySelectorAll('.stat-card-val').forEach((el, i) => {
+    if (el.textContent !== String(vals[i])) el.textContent = vals[i];
+  });
 }
 
 function timeAgo(ts) {
@@ -1197,11 +1947,26 @@ function chatKeydown(e) {
 
 function pollGlobalChat() {
   if (chatPollInterval) clearInterval(chatPollInterval);
+  // Poll every 2s — refreshes chat when active, activity always
   chatPollInterval = setInterval(() => {
-    const v = document.getElementById('view-global-chat');
-    if (v && v.classList.contains('active')) renderGlobalChat();
-  }, 3000);
+    const chatView = document.getElementById('view-global-chat');
+    if (chatView && chatView.classList.contains('active')) renderGlobalChat();
+    // Always refresh activity panel if dashboard visible
+    const dashView = document.getElementById('view-dashboard');
+    if (dashView && dashView.classList.contains('active')) refreshActivity();
+  }, 2000);
 }
+
+// Real-time sync across tabs via StorageEvent
+window.addEventListener('storage', (e) => {
+  if (!getSession()) return;
+  if (e.key === 'nw_activity' || e.key === 'nw_messages' || e.key === 'nw_users') {
+    const dashView = document.getElementById('view-dashboard');
+    if (dashView && dashView.classList.contains('active')) refreshActivity();
+    const chatView = document.getElementById('view-global-chat');
+    if (chatView && chatView.classList.contains('active')) renderGlobalChat();
+  }
+});
 
 // ============================================================
 // CALENDAR
@@ -1332,7 +2097,7 @@ function renderUsers() {
       <div class="uc-top">
         <div class="uc-avatar">${u.displayName.charAt(0).toUpperCase()}</div>
         <div>
-          <div class="uc-name">${escHtml(u.name)} ${u.displayName === session.displayName ? '(You)' : ''}</div>
+          <div class="uc-name">@${escHtml(u.displayName)} ${u.displayName === session.displayName ? '<span style="font-size:0.7rem;background:var(--accent-glow);color:var(--accent);padding:1px 7px;border-radius:4px;font-weight:600">You</span>' : ''}</div>
           <div class="uc-email">${escHtml(u.email)}</div>
         </div>
       </div>
@@ -1346,29 +2111,26 @@ function renderUsers() {
 }
 
 // ============================================================
-// AI CHATBOT
+// AI CHATBOT — Powered by Google Gemini
 // ============================================================
-const aiResponses = [
-  "I'm here to help! NexusWork makes team collaboration seamless.",
-  "Great question! You can check your team members in the 'Team Members' section.",
-  "The Calendar feature lets you add and manage events. Click any date to get started!",
-  "Global Chat is a great place to stay connected with your whole team.",
-  "Your data is stored securely in your browser's localStorage.",
-  "You can toggle between dark and light mode using the switch in the top bar.",
-  "Need to add a calendar event? Head to the Calendar section and click any date.",
-  "I'm Nexus AI — your built-in workplace assistant. Ask me anything!",
-  "The dashboard gives you a quick overview of your team's activity and stats.",
-  "To log out, click your name in the bottom left of the sidebar.",
-  "You can switch views using the sidebar navigation on the left.",
-  "Stay productive! Remember to check your calendar for upcoming events.",
-  "NexusWork is fully responsive — works on mobile and desktop!",
-];
+const GEMINI_KEY = 'AIzaSyBVjORaGk-UGhdgRrvBbzf7q7CwF6EWB6E';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
 
+// Conversation history for multi-turn context
+let botHistory = [];
 let botOpen = false;
+let botBusy = false;
+
+const GEMINI_SYSTEM = `You are Nexus AI, a smart, friendly, and concise workplace assistant built into NexusWork — a modern team collaboration suite. 
+You help users with productivity, scheduling, team communication, and general questions. 
+Keep responses clear, helpful, and professional but warm. Use plain text; avoid excessive markdown. 
+If asked about NexusWork features: it has a Dashboard, Global Chat (team messaging), Calendar (events), Team Members view, and this AI assistant. 
+Never reveal your underlying model or API key.`;
 
 function initBotGreeting() {
+  botHistory = [];
   const msgs = document.getElementById('bot-messages');
-  msgs.innerHTML = `<div class="bot-msg ai">👋 Hello! I'm Nexus AI, your workplace assistant. How can I help you today?</div>`;
+  msgs.innerHTML = `<div class="bot-msg ai">👋 Hi! I'm <strong>Nexus AI</strong>, powered by Gemini. Ask me anything — I'm here to help with your work, schedule, or any questions!</div>`;
 }
 
 function toggleBot() {
@@ -1383,29 +2145,84 @@ function openBot() {
   document.getElementById('bot-input').focus();
 }
 
-function sendBotMsg() {
+// Render basic markdown: **bold**, *italic*, `code`, newlines
+function renderMarkdown(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code style="background:rgba(108,99,255,0.15);padding:1px 5px;border-radius:4px;font-family:var(--font-mono);font-size:0.82em">$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
+async function sendBotMsg() {
+  if (botBusy) return;
   const input = document.getElementById('bot-input');
   const text = input.value.trim();
   if (!text) return;
+
+  botBusy = true;
+  input.disabled = true;
+
   const container = document.getElementById('bot-messages');
+
+  // Append user bubble
   container.innerHTML += `<div class="bot-msg user">${escHtml(text)}</div>`;
   input.value = '';
   container.scrollTop = container.scrollHeight;
+
+  // Add to history
+  botHistory.push({ role: 'user', parts: [{ text }] });
+
   // Typing indicator
   const typingId = 'typing_' + Date.now();
   container.innerHTML += `<div class="typing-dots" id="${typingId}"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
   container.scrollTop = container.scrollHeight;
-  setTimeout(() => {
+
+  try {
+    const payload = {
+      system_instruction: { parts: [{ text: GEMINI_SYSTEM }] },
+      contents: botHistory,
+      generationConfig: { temperature: 0.8, maxOutputTokens: 800 }
+    };
+
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    // Remove typing dots
     const td = document.getElementById(typingId);
     if (td) td.remove();
-    const resp = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-    container.innerHTML += `<div class="bot-msg ai">${escHtml(resp)}</div>`;
-    container.scrollTop = container.scrollHeight;
-  }, 1000 + Math.random() * 800);
+
+    if (!res.ok) {
+      const errMsg = data?.error?.message || 'Gemini API error. Please try again.';
+      container.innerHTML += `<div class="bot-msg ai" style="border-color:rgba(248,113,113,0.4);color:var(--red)">⚠️ ${escHtml(errMsg)}</div>`;
+    } else {
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t generate a response.';
+      // Add to history
+      botHistory.push({ role: 'model', parts: [{ text: reply }] });
+      // Keep history manageable (last 20 turns)
+      if (botHistory.length > 20) botHistory = botHistory.slice(-20);
+      container.innerHTML += `<div class="bot-msg ai">${renderMarkdown(reply)}</div>`;
+    }
+  } catch (err) {
+    const td = document.getElementById(typingId);
+    if (td) td.remove();
+    container.innerHTML += `<div class="bot-msg ai" style="border-color:rgba(248,113,113,0.4);color:var(--red)">⚠️ Network error — couldn't reach Gemini. Check your connection.</div>`;
+  }
+
+  container.scrollTop = container.scrollHeight;
+  botBusy = false;
+  input.disabled = false;
+  input.focus();
 }
 
 function botKeydown(e) {
-  if (e.key === 'Enter') { e.preventDefault(); sendBotMsg(); }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBotMsg(); }
 }
 
 // ============================================================
@@ -1415,10 +2232,15 @@ function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// Periodic session keep-alive & online status update
+// Periodic keep-alive: update last-seen + refresh relative timestamps
 setInterval(() => {
   const session = getSession();
-  if (session) updateLastSeen(session.displayName);
+  if (session) {
+    updateLastSeen(session.displayName);
+    // Refresh relative times ("2m ago" etc.) on activity list
+    const dashView = document.getElementById('view-dashboard');
+    if (dashView && dashView.classList.contains('active')) refreshActivity();
+  }
 }, 30000);
 </script>
 </body>
