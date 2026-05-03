@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NexusWork — Workplace Suite</title>
+<title>Encrypted Armoury — Workplace Suite</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
@@ -1019,7 +1019,7 @@ a{text-decoration:none;color:inherit}
 
 <!-- LOADING SCREEN -->
 <div id="loading-screen">
-  <div class="loader-logo">NexusWork</div>
+  <div class="loader-logo">Encrypted Armoury</div>
   <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
   <div class="loader-text">Initializing workspace…</div>
 </div>
@@ -1028,7 +1028,7 @@ a{text-decoration:none;color:inherit}
 <div id="auth-screen" style="display:none">
   <div class="auth-bg"></div>
   <div class="auth-card">
-    <div class="auth-logo">NexusWork</div>
+    <div class="auth-logo">Encrypted Armoury</div>
     <div class="auth-subtitle">Your modern workplace suite</div>
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
@@ -1094,7 +1094,7 @@ a{text-decoration:none;color:inherit}
 <div id="app">
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">NexusWork <span>Workplace Suite</span></div>
+    <div class="sidebar-logo">Encrypted Armoury <span>Workplace Suite</span></div>
     <nav class="sidebar-nav">
       <div class="nav-section">Main</div>
       <div class="nav-item active" onclick="showView('dashboard')">
@@ -1235,7 +1235,7 @@ a{text-decoration:none;color:inherit}
             <div class="vc-badge">🚧 Coming Soon</div>
             <div class="vc-title">Video Conferencing</div>
             <div class="vc-sub">HD video calls for your entire team</div>
-            <div class="vc-desc">We're building a powerful video conferencing experience right inside NexusWork. No third-party apps, no context switching — just seamless calls with your team.</div>
+            <div class="vc-desc">We're building a powerful video conferencing experience right inside Encrypted Armoury. No third-party apps, no context switching — just seamless calls with your team.</div>
             <div class="vc-features">
               <div class="vc-feature">
                 <span class="vc-feature-icon">🎥</span>
@@ -1412,7 +1412,7 @@ a{text-decoration:none;color:inherit}
 
   <!-- Status bar -->
   <div class="lo-statusbar">
-    <span>NEXUSWORK SECURITY</span>
+    <span>Encrypted Armoury SECURITY</span>
     <div class="lo-statusbar-progress" id="lo-status-progress"></div>
     <span id="lo-status-right">LOCKOUT ACTIVE</span>
   </div>
@@ -1906,7 +1906,7 @@ async function doRegister() {
   };
   users.push(user);
   saveUsers(users);
-  addActivity(`@${username} joined NexusWork`);
+  addActivity(`@${username} joined Encrypted Armoury`);
   switchTab('login');
   document.getElementById('login-display').value = username;
 }
@@ -2373,10 +2373,10 @@ let botHistory = [];
 let botOpen = false;
 let botBusy = false;
 
-const GEMINI_SYSTEM = `You are Nexus AI, a smart, friendly, and concise workplace assistant built into NexusWork — a modern team collaboration suite. 
+const GEMINI_SYSTEM = `You are Nexus AI, a smart, friendly, and concise workplace assistant built into Encrypted Armoury — a modern team collaboration suite. 
 You help users with productivity, scheduling, team communication, and general questions. 
 Keep responses clear, helpful, and professional but warm. Use plain text; avoid excessive markdown. 
-If asked about NexusWork features: it has a Dashboard, Global Chat (team messaging), Calendar (events), Team Members view, and this AI assistant. 
+If asked about Encrypted Armoury features: it has a Dashboard, Global Chat (team messaging), Calendar (events), Team Members view, and this AI assistant. 
 Never reveal your underlying model or API key.`;
 
 function initBotGreeting() {
