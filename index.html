@@ -1000,12 +1000,13 @@ a{text-decoration:none;color:inherit}
 .vc-feature-icon{font-size:1.2rem;margin-bottom:6px;display:block}
 .vc-feature-label{font-weight:600;color:var(--text);font-size:0.84rem}
 .vc-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.vc-actions a{display:block;text-decoration:none;}
 .vc-btn-primary{
-  padding:12px 28px;border-radius:var(--radius-sm);
+  display:block;width:100%;padding:14px 32px;border-radius:var(--radius-sm);
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;font-size:0.9rem;font-weight:700;
+  color:#fff;font-size:0.95rem;font-weight:700;
   transition:var(--transition);box-shadow:0 4px 16px var(--accent-glow);
-  cursor:pointer;
+  cursor:pointer;white-space:nowrap;text-align:center;
 }
 .vc-btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--accent-glow)}
 .vc-btn-primary:active{transform:translateY(0)}
@@ -1013,6 +1014,9 @@ a{text-decoration:none;color:inherit}
   .vc-card{padding:28px 18px}
   .vc-features{grid-template-columns:1fr}
   .vc-title{font-size:1.3rem}
+  .vc-actions{width:100%}
+  .vc-actions a{width:100%}
+  .vc-btn-primary{width:100%;padding:15px 20px;font-size:1rem}
 }
 </style>
 </head>
