@@ -982,11 +982,16 @@ a{text-decoration:none;color:inherit}
 .vc-sub{font-size:0.9rem;color:var(--text2);margin-bottom:6px}
 .vc-desc{font-size:0.83rem;color:var(--text3);line-height:1.6;margin-bottom:28px}
 .vc-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25);
-  color:var(--yellow);font-size:0.78rem;font-weight:600;padding:5px 14px;border-radius:99px;
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,201,167,0.12);border:1px solid rgba(0,201,167,0.3);
+  color:var(--accent);font-size:0.78rem;font-weight:600;padding:5px 14px;border-radius:99px;
   margin-bottom:28px;
 }
+.vc-badge-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:badgePulse 1.8s ease infinite;flex-shrink:0;
+}
+@keyframes badgePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
 .vc-features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
 .vc-feature{
   background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);
@@ -1000,14 +1005,10 @@ a{text-decoration:none;color:inherit}
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#fff;font-size:0.9rem;font-weight:700;
   transition:var(--transition);box-shadow:0 4px 16px var(--accent-glow);
-  opacity:0.6;cursor:not-allowed;
+  cursor:pointer;
 }
-.vc-btn-secondary{
-  padding:12px 24px;border-radius:var(--radius-sm);
-  background:var(--bg3);border:1px solid var(--border);
-  color:var(--text2);font-size:0.9rem;font-weight:600;
-  transition:var(--transition);opacity:0.6;cursor:not-allowed;
-}
+.vc-btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--accent-glow)}
+.vc-btn-primary:active{transform:translateY(0)}
 @media(max-width:480px){
   .vc-card{padding:28px 18px}
   .vc-features{grid-template-columns:1fr}
@@ -1120,7 +1121,7 @@ a{text-decoration:none;color:inherit}
       </div>
       <div class="nav-item" onclick="showView('video')">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.868v6.264a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-        Video Calls <span style="font-size:0.6rem;background:rgba(245,158,11,0.2);color:var(--yellow);padding:1px 6px;border-radius:4px;margin-left:4px">Soon</span>
+        Video Calls <span style="font-size:0.6rem;background:rgba(0,201,167,0.2);color:var(--accent);padding:1px 6px;border-radius:4px;margin-left:4px">Live</span>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -1232,10 +1233,10 @@ a{text-decoration:none;color:inherit}
         <div class="vc-wrap">
           <div class="vc-card">
             <div class="vc-icon-ring">📹</div>
-            <div class="vc-badge">🚧 Coming Soon</div>
+            <div class="vc-badge"><span class="vc-badge-dot"></span>Available Now</div>
             <div class="vc-title">Video Conferencing</div>
             <div class="vc-sub">HD video calls for your entire team</div>
-            <div class="vc-desc">We're building a powerful video conferencing experience right inside Encrypted Armoury. No third-party apps, no context switching — just seamless calls with your team.</div>
+            <div class="vc-desc">Jump straight into a secure video call — no downloads, no third-party apps. Just click below and you're in.</div>
             <div class="vc-features">
               <div class="vc-feature">
                 <span class="vc-feature-icon">🎥</span>
@@ -1269,8 +1270,9 @@ a{text-decoration:none;color:inherit}
               </div>
             </div>
             <div class="vc-actions">
-              <button class="vc-btn-primary" disabled title="Coming soon">Start a Meeting</button>
-              <button class="vc-btn-secondary" disabled title="Coming soon">Join with Code</button>
+              <a href="https://encrypted-armoury-meet.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <button class="vc-btn-primary">🚀 Start a Meeting</button>
+              </a>
             </div>
           </div>
         </div>
